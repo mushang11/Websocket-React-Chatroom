@@ -24,6 +24,7 @@ const App = (props) => {
     state.socket.emit('login', { uid, username });
   };
   const handleKeyPress = (e) => {
+    console.log(e);
     if (e.key == 'Enter') {
       handleLogin();
     }

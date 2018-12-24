@@ -2,10 +2,8 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    entry: [
-        'webpack-hot-middleware/client?reload=true',
-        './src/index'
-    ],
+    entry: './src/index',
+    mode:'development',
     devtool: 'source-map',
     output: {
         path: path.join(__dirname, 'dist'),
@@ -14,15 +12,24 @@ module.exports = {
     },
     plugins: [
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
+        new webpack.NoEmitOnErrorsPlugin(),
+        new webpack.HotModuleReplacementPlugin({
+            multiStep: true
+          })
     ],
+    devServer:{
+        historyApiFallback: true,
+        hot: true,
+        inline: true,
+        host: 'localhost', // Defaults to `localhost`
+        port: 3000, // Defaults to 8080
+    },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loaders: ['babel-loader']
+                loader:'babel-loader'
             },
             {
                 test: /\.(png|jpg)$/,
